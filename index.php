@@ -37,7 +37,7 @@ DB::getInstance()->delete('users', array('id', '=', '12'));
 $user = new User();
 if($user->isLoggedIn()) {
 ?>
-  <p>Hello <a href="#"><?php echo escape($user->data()->username); ?></a></p>
+  <p>Hello <a href="<?php echo 'profile.php?user=' . $user->data()->username; ?>" ><?php echo escape($user->data()->username); ?></a></p>
 
   <ul>
     <li><a href="logout.php">log out</a></li>
