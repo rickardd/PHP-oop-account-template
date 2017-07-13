@@ -45,11 +45,13 @@ class User {
   }
 
   public function find( $user = null ) {
+
     if( $user ) {
       $field = ( is_numeric($user)) ? 'id' : 'username';
       $data = $this->_db->get('users', array($field, '=', $user));
 
       if($data->count()) {
+
         $this->_data = $data->first();
         return true;
       }
@@ -92,13 +94,25 @@ class User {
   }
 
   public function logout(){
-    echo $this->_db->delete('user_session', array('user_id', '=', $this->data()->id));
+    $this->_db->delete('user_session', array('user_id', '=', $this->data()->id));
     Session::delete($this->_sessionName);
     Cookie::delete($this->_cookieName);
   }
 
+  public function hasPermission($key) {
+    // flock = group in database. group was reserved name
+    $group = $this->_db->get('flock', array('id', '=', $this->data()->flock));
+    if($group->count()) {
+      $permissions = json_decode($group->first()->permissions, true);
+      if ($permissions[$key] == true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public function exists() {
-    return (!empty($this->data)) ? true : false;
+    return (!empty($this->_data)) ? true : false;
   }
 
   public function data() {
