@@ -1,11 +1,7 @@
 <?php
 require_once 'core/init.php';
 
-// Salt does not get saved correctly to database.
-// *C@��u:z�:���u$,�Q^���91F
-// only *C@ will be saved.
-//
-// DB->delete does not work properly.
+
 
 // $user =  DB::getInstance()->get( 'users', array('username', '=', 'billy'));
 
